@@ -7,8 +7,8 @@ curl_setopt($curlWoo, CURLOPT_URL, $urlWoo);
 curl_setopt($curlWoo, CURLOPT_RETURNTRANSFER, true);
 
 $headersWoo = array(
-   "Accept: */*",
-   "Authorization: Basic Y2tfYTZmZjgyOWM3ZGUyODk0NDQ3OTI2ODBjMGM1YzQ4ZmUwZTZjMWQ4Yjpjc18yNjc3NzQxYWE3ZDFiMDk5ZDlkNDUzNGMwN2ZjYjZjNGVkM2QwNzY0",
+    "Accept: */*",
+    "Authorization: Basic Y2tfYTZmZjgyOWM3ZGUyODk0NDQ3OTI2ODBjMGM1YzQ4ZmUwZTZjMWQ4Yjpjc18yNjc3NzQxYWE3ZDFiMDk5ZDlkNDUzNGMwN2ZjYjZjNGVkM2QwNzY0",
 );
 curl_setopt($curlWoo, CURLOPT_HTTPHEADER, $headersWoo);
 
@@ -18,9 +18,7 @@ curl_setopt($curlWoo, CURLOPT_SSL_VERIFYPEER, false);
 
 $respWoo = curl_exec($curlWoo);
 curl_close($curlWoo);
-var_dump($respWoo);
-
-// add_post_meta( $post->ID, 'Products Response', $respWoo, true );
+file_put_contents("response.json", $respWoo);
 
 ?>
 

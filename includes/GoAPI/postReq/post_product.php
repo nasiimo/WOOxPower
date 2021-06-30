@@ -8,22 +8,35 @@ curl_setopt($curlPro, CURLOPT_POST, true);
 curl_setopt($curlPro, CURLOPT_RETURNTRANSFER, true);
 
 $headersPro = array(
-   "Authorization: Bearer {$accessTokken}",
-   "Content-Type: application/json",
+    "Authorization: Bearer 123",
+    "Content-Type: application/json",
 );
 curl_setopt($curlPro, CURLOPT_HTTPHEADER, $headersPro);
 
-require_once plugin_dir_path( __FILE__ ) . '../../GoAPI/woo/woo_get_products.php';
+$json = file_get_contents('../../GoAPI/woo/response.json');
 
 $respWoo = json_decode($json);
 
-$dataPro = <<<DATA
-{
-	"id": $respWoo->id,
-	"name": $respWoo->name,
-	"price": $dataTwo->salesPrice
+//$dataPro = <<<DATA
+//{
+//	"id": $respWoo[0]->id,
+//	"name": $respWoo[0]->name,
+//	"price": $dataTwo->salesPrice
+//}
+//DATA;
+foreach ($respWoo as $item) {
+    $dataPro[] = [
+        'id' => $item->id,
+        'name' => $item->name,
+        'price' => 0
+    ];
+
 }
-DATA;
+$dataPro = json_encode($dataPro);
+
+echo "<pre>";
+print_r($dataPro);
+die;
 
 // $dataTwo = json_decode($json);
 // {
@@ -44,6 +57,6 @@ $respPro = curl_exec($curlPro);
 curl_close($curlPro);
 var_dump($respPro);
 
-add_post_meta( $post->ID, 'Products Response', $dataPro, true );
+add_post_meta($post->ID, 'Products Response', $dataPro, true);
 
 ?>
